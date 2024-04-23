@@ -32,7 +32,7 @@ const HeroSection = () => {
           <GridItem
             rowSpan={2}
             colSpan={1}
-            bg="#744210"
+            bg="#AF8260"
             textAlign={"center"}
             // mx={"auto"}  
             boxShadow="sm"
@@ -52,7 +52,7 @@ const HeroSection = () => {
             <Text as="i"  color={'white'} >{page.login}</Text>
           </GridItem>
 
-          <GridItem colSpan={4} bg="#744210" boxShadow="sm" rounded="md">
+          <GridItem colSpan={4} bg="#AF8260" boxShadow="sm" rounded="md">
             <Text
               noOfLines={[1, 2, 3]}
               color="white"
