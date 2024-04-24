@@ -16,6 +16,9 @@ function Navbar() {
             <NavLink>
               <Link to='/contact' className='font-bold'>Contact</Link>
             </NavLink>
+            <NavLink>
+              <Link to='/login' className='font-bold'>404 page</Link>
+            </NavLink>
           </ul>
         </div>
         <hr />

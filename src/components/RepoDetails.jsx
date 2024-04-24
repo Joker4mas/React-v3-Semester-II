@@ -16,11 +16,13 @@ import {
   Text,
   Button,
   ButtonGroup,
+  Heading,
 } from "@chakra-ui/react";
 
 function ListRepos() {
   const [repositories, setRepositories] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [record, setRecord] = useState();
   const itemsPerPage = 5;
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -31,7 +33,9 @@ function ListRepos() {
     const fetchRepositories = async () => {
       try {
         const response = await axios.get("https://api.github.com/users/Joker4mas/repos");
-        setRepositories(response.data);
+       { setRepositories(response.data)
+           setRecord(response.data)
+        }
       } catch (error) {
         console.error("Error fetching repositories:", error);
       }
@@ -45,30 +49,34 @@ function ListRepos() {
     setCurrentPage(pageNumber);
   };
 
+  const Filter = (event) =>{
+    setRecord(repositories.filter(f => f.name.toLowerCase().includes(event.target.value)))
+  }
+
   return (
-    <div>
+    <div className="text-center">
       <Flex mt="2rem" p="4" alignItems="center" justifyContent="space-between">
-        <Box bg="#744210" p="2" borderRadius="xl" color="white">
+        {/* <Box bg="teal" p="2" borderRadius="xl" color="white">
           <Text>Total Repositories: {repositories.length}</Text>
-        </Box>
+        </Box> */}
         <Box p="4" bg="white" borderRadius="xl">
-          <Input placeholder="Search repo" size="sm" />
+          <Input placeholder="Search repo" size="sm" borderRadius='md' onChange={Filter}/>
         </Box>
         <Button colorScheme="teal">New Repositories</Button>
       </Flex>
 
-      <TableContainer mt="4">
+      <TableContainer mt="4" p='4' borderRadius='xl'>
         <Table variant="simple">
-          <Thead bg="#AF8260" color="white">
+          <Thead bg="#AF8260" color="white" mb='4' >
             <Tr>
-              <Th>Repository Name</Th>
-              <Th>Language Used</Th>
-              <Th>View Repo</Th>
+              <Th><Text fontSize='1.5em'>Repository Name</Text> </Th>
+              <Th><Text fontSize='1.5em'>Language</Text></Th>
+              <Th><Text fontSize='1.5em'>View</Text></Th>
             </Tr>
           </Thead>
-          <Tbody bg="#AF8260" color="white">
+          <Tbody bg="#AF8260" color="white" my='4' rounded={'md'}>
             {currentItems.map(repo => (
-              <Tr key={repo.id}>
+              <Tr key={repo.id} >
                 <Td><a href={repo.html_url}>{repo.name}</a></Td>
                 <Td>{repo.language}</Td>
                 <Td>
@@ -82,13 +90,14 @@ function ListRepos() {
         </Table>
       </TableContainer>
 
-      <ButtonGroup mt="4">
+
+   <ButtonGroup my="4">
         {Array.from({ length: totalPages }, (_, i) => (
           <Button
             key={i + 1}
-            colorScheme={currentPage === i + 1 ? "blue" : "yellow"}
+            colorScheme={currentPage === i + 1 ? "green" : "yellow"}
             onClick={() => handlePageChange(i + 1)}
-          >
+           textAlign={'center'}>
             {i + 1}
           </Button>
         ))}
